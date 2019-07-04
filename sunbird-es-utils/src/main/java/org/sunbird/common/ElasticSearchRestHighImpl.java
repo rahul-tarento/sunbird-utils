@@ -120,8 +120,8 @@ public class ElasticSearchRestHighImpl implements ElasticSearchService {
                     + " id : "
                     + identifier
                     + " with error :"
-                    + e,
-                LoggerEnum.ERROR.name());
+                    + e.getMessage(),
+                e);
             ProjectLogger.log(
                 "ElasticSearchRestHighImpl:save: method end at =="
                     + System.currentTimeMillis()
@@ -186,8 +186,7 @@ public class ElasticSearchRestHighImpl implements ElasticSearchService {
             @Override
             public void onFailure(Exception e) {
               ProjectLogger.log(
-                  "ElasticSearchRestHighImpl:update: exception occured:" + e.getMessage(),
-                  LoggerEnum.ERROR.name());
+                  "ElasticSearchRestHighImpl:update: exception occured:" + e.getMessage(), e);
               promise.failure(e);
             }
           };
@@ -249,8 +248,9 @@ public class ElasticSearchRestHighImpl implements ElasticSearchService {
             @Override
             public void onFailure(Exception e) {
               ProjectLogger.log(
-                  "ElasticSearchRestHighImpl:getDataByIdentifier: method Failed with error == " + e,
-                  LoggerEnum.INFO.name());
+                  "ElasticSearchRestHighImpl:getDataByIdentifier: method Failed with error == "
+                      + e.getMessage(),
+                  e);
               promise.failure(e);
             }
           };
@@ -264,7 +264,7 @@ public class ElasticSearchRestHighImpl implements ElasticSearchService {
               + ","
               + " identifier = "
               + identifier,
-          LoggerEnum.INFO.name());
+          LoggerEnum.ERROR.name());
       promise.failure(ProjectUtil.createClientException(ResponseCode.invalidData));
     }
 
@@ -307,8 +307,8 @@ public class ElasticSearchRestHighImpl implements ElasticSearchService {
             @Override
             public void onFailure(Exception e) {
               ProjectLogger.log(
-                  "ElasticSearchRestHighImpl:delete: Async Failed due to error :" + e,
-                  LoggerEnum.INFO.name());
+                  "ElasticSearchRestHighImpl:delete: Async Failed due to error :" + e.getMessage(),
+                  e);
               promise.failure(e);
             }
           };
@@ -482,8 +482,7 @@ public class ElasticSearchRestHighImpl implements ElasticSearchService {
                     + calculateEndTime(startTime),
                 LoggerEnum.PERF_LOG.name());
             ProjectLogger.log(
-                "ElasticSearchRestHighImpl:search: method Failed with error :" + e,
-                LoggerEnum.ERROR.name());
+                "ElasticSearchRestHighImpl:search: method Failed with error :" + e.getMessage(), e);
           }
         };
 
@@ -516,9 +515,7 @@ public class ElasticSearchRestHighImpl implements ElasticSearchService {
           @Override
           public void onFailure(Exception e) {
             promise.failure(e);
-            ProjectLogger.log(
-                "ElasticSearchRestHighImpl:healthCheck: error " + e.getMessage(),
-                LoggerEnum.INFO.name());
+            ProjectLogger.log("ElasticSearchRestHighImpl:healthCheck: error " + e.getMessage(), e);
           }
         };
     ConnectionManager.getRestClient().indices().existsAsync(indexRequest, listener);
@@ -671,8 +668,7 @@ public class ElasticSearchRestHighImpl implements ElasticSearchService {
             @Override
             public void onFailure(Exception e) {
               ProjectLogger.log(
-                  "ElasticSearchRestHighImpl:upsert: exception occured:" + e.getMessage(),
-                  LoggerEnum.ERROR.name());
+                  "ElasticSearchRestHighImpl:upsert: exception occured:" + e.getMessage(), e);
               promise.failure(e);
             }
           };
